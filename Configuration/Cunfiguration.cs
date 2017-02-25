@@ -1,5 +1,5 @@
 ﻿using Configuration.Configuration.Models;
-using Configuration.Models.Web;
+using Configuration.Models;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Configuration;
@@ -22,6 +22,18 @@ namespace Configuration
             }
         }
 
+        public static DataConfiguration DataConfiguration
+        {
+            get
+            {
+                return GetConfigurationFile<DataConfiguration>();
+            }
+        }
+
+        public static T GetConfiguration<T>()
+        {
+            return GetConfigurationFile<T>();
+        }
         private static T GetConfigurationFile<T>()
         {
             var basePath = GetExcutionFolder() + $@"\{ConfigurationFolderName}\";

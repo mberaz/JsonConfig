@@ -7,7 +7,8 @@ namespace JsonConfig.Controllers
     {
         public ActionResult Index()
         {
-            var config = Cunfiguration.WebConfiguration;
+            var webconfig = Cunfiguration.WebConfiguration;
+            var dataCOnfig = Cunfiguration.DataConfiguration;
             return View();
         }
 

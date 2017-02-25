@@ -10,6 +10,10 @@ namespace Configuration
 {
     public static class Cunfiguration
     {
+        const string ConfigurationFolderName = "Configuration";
+        const string GlobalConfigurationFile = "GlobalConfiguration.json";
+        const string EnvironmentAppSettingsKey = "environment";
+
         public static WebConfiguration WebConfiguration
         {
             get
@@ -20,18 +24,24 @@ namespace Configuration
 
         private static T GetConfigurationFile<T>()
         {
+            var basePath = GetExcutionFolder() + $@"\{ConfigurationFolderName}\";
+
+            var environment = GetEnvironment(basePath);
+            var fileName = typeof(T).Name + ".json";
+
+            return ReadConfigJson<T>(basePath + $@"{environment}\{fileName}");
+        }
+
+        private static string GetExcutionFolder()
+        {
             string assemblyFile = new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath;
-            var basePath = Path.GetDirectoryName(assemblyFile).Replace("%20", " ") + @"\Configuration\";
+            return Uri.UnescapeDataString(Path.GetDirectoryName(assemblyFile));
+        }
 
-            var environment = ConfigurationManager.AppSettings["environment"];
-
-            if (string.IsNullOrEmpty(environment))
-            {
-                var globalConfig = ReadConfigJson<GlobalConfiguration>(basePath + "GlobalConfiguration.json");
-                environment = globalConfig.Environment;
-            }
-
-            return ReadConfigJson<T>(basePath + $@"{environment}\{(typeof(T).Name + ".json")}");
+        private static string GetEnvironment(string basePath)
+        {
+            //see if the enviroment is definet in the web project
+            return ConfigurationManager.AppSettings[EnvironmentAppSettingsKey] ?? ReadConfigJson<GlobalConfiguration>(basePath + GlobalConfigurationFile).Environment;
         }
         private static T ReadConfigJson<T>(string path)
         {

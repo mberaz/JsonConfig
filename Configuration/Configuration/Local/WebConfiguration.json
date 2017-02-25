@@ -1,4 +1,8 @@
 {
   "WebSite": "http://localhost:81",
-  "UserName": "local"
+  "UserName": "local",
+  "TokenModel": {
+    "TimeOut": 100,
+    "MaxLength": 20
+  }
 }

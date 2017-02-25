@@ -1,4 +1,8 @@
 {
   "WebSite": "http://google.com",
-  "UserName": "michael"
+  "UserName": "michael",
+  "TokenModel": {
+    "TimeOut": 15,
+    "MaxLength": 20
+  }
 }

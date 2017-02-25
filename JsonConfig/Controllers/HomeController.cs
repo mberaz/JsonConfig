@@ -9,6 +9,7 @@ namespace JsonConfig.Controllers
         {
             var webconfig = Cunfiguration.WebConfiguration;
             var dataCOnfig = Cunfiguration.DataConfiguration;
+            var apiConfig = Cunfiguration.ApiConfiguration;
             return View();
         }
 

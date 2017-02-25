@@ -5,6 +5,7 @@ using System;
 using System.Configuration;
 using System.IO;
 using System.Reflection;
+using System.Xml.Serialization;
 
 namespace Configuration
 {
@@ -29,6 +30,14 @@ namespace Configuration
                 return GetConfigurationFile<DataConfiguration>();
             }
         }
+        public static ApiConfiguration ApiConfiguration
+        {
+            get
+            {
+                return GetXmlConfigurationFile<ApiConfiguration>();
+            }
+        }
+
 
         public static T GetConfiguration<T>()
         {
@@ -42,6 +51,16 @@ namespace Configuration
             var fileName = typeof(T).Name + ".json";
 
             return ReadConfigJson<T>(basePath + $@"{environment}\{fileName}");
+        }
+
+        private static T GetXmlConfigurationFile<T>()
+        {
+            var basePath = GetExcutionFolder() + $@"\{ConfigurationFolderName}\";
+
+            var environment = GetEnvironment(basePath);
+            var fileName = typeof(T).Name + ".xml";
+
+            return ReadConfigXml<T>(basePath + $@"{environment}\{fileName}");
         }
 
         private static string GetExcutionFolder()
@@ -58,6 +77,12 @@ namespace Configuration
         private static T ReadConfigJson<T>(string path)
         {
             return JObject.Parse(File.ReadAllText(path)).ToObject<T>();
+        }
+
+        public static T ReadConfigXml<T>(string path)
+        {
+            var reader = new XmlSerializer(typeof(T));
+            return (T)reader.Deserialize(new StreamReader(path));
         }
     }
 }

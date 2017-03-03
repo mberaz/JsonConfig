@@ -72,7 +72,8 @@ namespace Configuration
         private static string GetEnvironment(string basePath)
         {
             //see if the enviroment is definet in the web project
-            return ConfigurationManager.AppSettings[EnvironmentAppSettingsKey] ?? ReadConfigJson<GlobalConfiguration>(basePath + GlobalConfigurationFile).Environment;
+            var test = ConfigurationManager.AppSettings[EnvironmentAppSettingsKey];
+            return  ConfigurationManager.AppSettings[EnvironmentAppSettingsKey] ?? ReadConfigJson<GlobalConfiguration>(basePath + GlobalConfigurationFile).Environment;
         }
         private static T ReadConfigJson<T>(string path)
         {

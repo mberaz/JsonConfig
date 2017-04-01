@@ -3,7 +3,7 @@
     public class WebConfiguration
     {
 
-        public static WebConfiguration Insance(string environment = null)
+        public static WebConfiguration Instance(string environment = null)
         {
             return Cunfiguration.GetConfiguration<WebConfiguration>(environment);
         }

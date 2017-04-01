@@ -8,10 +8,10 @@ namespace JsonConfig.Controllers
     {
         public ActionResult Index()
         {
-            var webconfigdev =WebConfiguration.Insance().UserName;
+            var webconfigdev =WebConfiguration.Instance().UserName;
 
-            var webconfigprod = WebConfiguration.Insance("ProdUS").UserName;
-            var webconfiglocal = WebConfiguration.Insance("Local").UserName;
+            var webconfigprod = WebConfiguration.Instance("ProdUS").UserName;
+            var webconfiglocal = WebConfiguration.Instance("Local").UserName;
             return View();
         }
 

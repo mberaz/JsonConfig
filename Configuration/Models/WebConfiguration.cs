@@ -2,6 +2,12 @@
 {
     public class WebConfiguration
     {
+
+        public static WebConfiguration Insance(string environment = null)
+        {
+            return Cunfiguration.GetConfiguration<WebConfiguration>(environment);
+        }
+
         public string WebSite { get; set; }
         public string UserName { get; set; }
         public Tokenmodel TokenModel { get; set; }

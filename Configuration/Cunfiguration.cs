@@ -15,49 +15,24 @@ namespace Configuration
         const string GlobalConfigurationFile = "GlobalConfiguration.json";
         const string EnvironmentAppSettingsKey = "environment";
 
-        public static WebConfiguration WebConfiguration
+        public static T GetConfiguration<T>(string environment = null)
         {
-            get
-            {
-                return GetConfigurationFile<WebConfiguration>();
-            }
+            return GetConfigurationFile<T>(environment);
         }
 
-        public static DataConfiguration DataConfiguration
-        {
-            get
-            {
-                return GetConfigurationFile<DataConfiguration>();
-            }
-        }
-        public static ApiConfiguration ApiConfiguration
-        {
-            get
-            {
-                return GetXmlConfigurationFile<ApiConfiguration>();
-            }
-        }
-
-
-        public static T GetConfiguration<T>()
-        {
-            return GetConfigurationFile<T>();
-        }
-        private static T GetConfigurationFile<T>()
+        private static T GetConfigurationFile<T>(string environment = null)
         {
             var basePath = GetExcutionFolder() + $@"\{ConfigurationFolderName}\";
-
-            var environment = GetEnvironment(basePath);
+            environment = environment ?? GetEnvironment(basePath);
             var fileName = typeof(T).Name + ".json";
 
             return ReadConfigJson<T>(basePath + $@"{environment}\{fileName}");
         }
 
-        private static T GetXmlConfigurationFile<T>()
+        private static T GetXmlConfigurationFile<T>(string environment = null)
         {
             var basePath = GetExcutionFolder() + $@"\{ConfigurationFolderName}\";
-
-            var environment = GetEnvironment(basePath);
+            environment = environment ?? GetEnvironment(basePath);
             var fileName = typeof(T).Name + ".xml";
 
             return ReadConfigXml<T>(basePath + $@"{environment}\{fileName}");
@@ -73,7 +48,7 @@ namespace Configuration
         {
             //see if the enviroment is definet in the web project
             var test = ConfigurationManager.AppSettings[EnvironmentAppSettingsKey];
-            return  ConfigurationManager.AppSettings[EnvironmentAppSettingsKey] ?? ReadConfigJson<GlobalConfiguration>(basePath + GlobalConfigurationFile).Environment;
+            return ConfigurationManager.AppSettings[EnvironmentAppSettingsKey] ?? ReadConfigJson<GlobalConfiguration>(basePath + GlobalConfigurationFile).Environment;
         }
         private static T ReadConfigJson<T>(string path)
         {

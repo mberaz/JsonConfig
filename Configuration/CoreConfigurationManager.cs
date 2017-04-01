@@ -25,14 +25,18 @@ namespace Configuration
             }
         }
 
+        public static T GetConfiguration<T>(string environment = null)
+        {
+            return GetConfigurationFile<T>(environment);
+        }
 
-        private static T GetConfigurationFile<T>()
+        private static T GetConfigurationFile<T>(string environment = null)
         {
             var excutionFolder = GetExcutionFolder();
             var basePath = excutionFolder + $@"\{ConfigurationFolderName}\";
             var appSettingsBasePath = excutionFolder + $@"\{AppSettingsFileName}\";
 
-            var environment = GetEnvironment(appSettingsBasePath);
+            environment = environment ?? GetEnvironment(appSettingsBasePath);
             var fileName = typeof(T).Name + ".json";
 
             return ReadConfigJson<T>(basePath + $@"{environment}\{fileName}");
@@ -47,7 +51,7 @@ namespace Configuration
         private static string GetEnvironment(string basePath)
         {
             var appSetingsJson = File.ReadAllText(basePath.TrimEnd('\\'));
-            return JsonParser.JsonValueByPath<string>(appSetingsJson,EnvironmentAppSettingsKey);
+            return JsonParser.JsonValueByPath<string>(appSetingsJson, EnvironmentAppSettingsKey);
         }
         private static T ReadConfigJson<T>(string path)
         {

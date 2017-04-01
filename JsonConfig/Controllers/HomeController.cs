@@ -1,4 +1,5 @@
 ﻿using Configuration;
+using Configuration.Models;
 using System.Web.Mvc;
 
 namespace JsonConfig.Controllers
@@ -7,9 +8,10 @@ namespace JsonConfig.Controllers
     {
         public ActionResult Index()
         {
-            var webconfig = Cunfiguration.WebConfiguration;
-            var dataCOnfig = Cunfiguration.DataConfiguration;
-            var apiConfig = Cunfiguration.ApiConfiguration;
+            var webconfigdev =WebConfiguration.Insance().UserName;
+
+            var webconfigprod = WebConfiguration.Insance("ProdUS").UserName;
+            var webconfiglocal = WebConfiguration.Insance("Local").UserName;
             return View();
         }
 

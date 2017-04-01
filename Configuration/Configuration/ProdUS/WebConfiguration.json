@@ -1,0 +1,8 @@
+{
+  "WebSite": "http://prod.us.com",
+  "UserName": "prodUS",
+  "TokenModel": {
+    "TimeOut": 1100,
+    "MaxLength": 29
+  }
+}

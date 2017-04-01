@@ -27,7 +27,7 @@ namespace WebApplication1.Controllers
         public IEnumerable<string> Get()
         {
             var t = optionsAccessor.ApiName;
-            var r = CoreConfigurationManager.WebConfiguration.WebSite;
+            var config = WebConfiguration.Insance();
             return new string[] { "value1", "value2" };
         }
 
